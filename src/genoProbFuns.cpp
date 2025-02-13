@@ -11,10 +11,10 @@ double prob_relUnknown(int aindU, int bindU, int Ugind, double *Fvec, double fst
 	//ibd = ibd vector (NOC long)
 	
 	double genoSum; //used to sum the genotype probability tfor unknowns		
-	//int aindU = outG1vec[2*Ugind  ]; //get allele index of genotype g_1 (unknown)
-	//int bindU = outG1vec[2*Ugind+1]; //get allele index of genotype g_2 (unknown)
-	//int aindR = outG1vec[2*Rgind  ]; //get allele index of genotype g_1 (related)
-	//int bindR = outG1vec[2*Rgind+1]; //get allele index of genotype g_2 (related)
+	//int aindU = outG1vec[Ugind  ]; //get allele index of genotype g_1 (unknown)
+	//int bindU = outG1vec[Ugind+1]; //get allele index of genotype g_2 (unknown)
+	//int aindR = outG1vec[Rgind  ]; //get allele index of genotype g_1 (related)
+	//int bindR = outG1vec[Rgind+1]; //get allele index of genotype g_2 (related)
 	
 	bool Uhom = aindU==bindU; //boolean of whether unknown genotype is homozygote
 	
