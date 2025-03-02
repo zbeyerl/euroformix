@@ -1,58 +1,9 @@
 //helpfunction to get allele probability:
 //#include <vector> //vector storage
   
-    path.package("euroformix", quiet = FALSE)
-    paste(packagePath,"extdata",sep=.separator)
-  }
-  read.delim(file=filePath, header = TRUE, sep = "\t", quote = "\"",dec = ".", fill = TRUE, stringsAsFactors=FALSE)
- 
-  kits<-unique(.kitInfo$Short.Name)
-	if (is.null(kit)) {
-		res<-kits
-     else
-		
-		if (is.numeric(kit)) {
-			index<-kit 
-		} else {
-			index<-match(toupper(kit),toupper(kits)) 
-		}
-		if (any(is.na(index))) { 
-			return(NA)
-		
-		} else {
-		  currentKit <- .kitInfo[.kitInfo$Short.Name==kits[index], ]
-              res <- data.frame(Panel = currentKit$Panel,
-                        Short.Name = currentKit$Short.Name,
-                        Full.Name = currentKit$Full.Name,
-                        Marker = currentKit$Marker,
-                        Allele = currentKit$Allele,
-                        Size = currentKit$Size,
-                        Size.Min = currentKit$Size.Min,
-                        Size.Max = currentKit$Size.Max,
-                        Virtual = currentKit$Virtual,
-                        Color = currentKit$Color,
-                        Repeat = currentKit$Repeat,
-                        Marker.Min = currentKit$Marker.Min,
-                        Marker.Max = currentKit$Marker.Max,
-                        Offset = currentKit$Offset,
-                        Gender.Marker = currentKit$Gender.Marker,
-                        stringsAsFactors = FALSE)
-		  res$Marker <- factor(res$Marker, levels=unique(res$Marker))
-		} 
-	
- if (!is.null(kit)) {
-
-    if(is.na(what)){  
-      return(res)
- } else if (toupper(what) == "GENDER"){  
-      genderMarker <- as.character(unique(res$Marker[res$Gender.Marker == TRUE]))
-      if(length(genderMarker) > 1){
-        warning(paste("More than one gender marker returned for kit", kit))
-      }
-      return(genderMarker);
 
 
-double prob_a(double Pa, double mm, double nn, double fst) {
+double prob_a(double Pa, double mm, double nn, double fst, double genderMarker) {
 	return( (mm*(fst) + (1-(fst))*Pa)/(1+(nn-1)*(fst)) ); 
 }
 
