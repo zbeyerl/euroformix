@@ -27,11 +27,19 @@ calcGjoint = function(freq,nU=1,fst=0,refK=NULL,refR=NULL,ibd=c(1,0,0)) {
   if(is.character(sumsToOne)) warning("freq argument must sum to one!")
   
   #Function calculates genotypes for all possib
+if genderMarker {
+  nn = length(freq) #number of alleles
+  nG <- nn #number of allele outcome
+  #nG^nU #NUMBER OF ITERATIONS
+  #print(nG^nU) 
+ 
+} else {
+  
   nn = length(freq) #number of alleles
   nG <- nn*(1+nn)/2 #number of allele outcome
   #nG^nU #NUMBER OF ITERATIONS
   #print(nG^nU)
-  
+  }
   #PRESTEP: GET GENOTYPE OUTCOME: SIMILAR TO getGlist function
   av <- names(freq)   
   suppressWarnings({   
