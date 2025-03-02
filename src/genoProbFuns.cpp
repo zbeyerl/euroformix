@@ -1,6 +1,8 @@
 //helpfunction to get allele probability:
 //#include <vector> //vector storage
 
+#include "getKit.R"
+
 double prob_a(double Pa, double mm, double nn, double fst) {
 	return( (mm*(fst) + (1-(fst))*Pa)/(1+(nn-1)*(fst)) ); 
 }
@@ -18,7 +20,7 @@ double prob_relUnknown(int aindU, int bindU, int Ugind, double *Fvec, double fst
 	
 	bool Uhom = aindU==bindU; //boolean of whether unknown genotype is homozygote
 	if(genderMarker) { 
-		Uhom }
+		Uhom; }
 	//First step: Calculate random match probability of unrelated situation:
 	genoSum = prob_a(Fvec[aindU],maTypedvec[aindU],nTyped,fst); //init with prob 1st allele  
 	if(Uhom) { //if unknown is homozygote					
