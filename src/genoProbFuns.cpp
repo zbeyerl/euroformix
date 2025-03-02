@@ -1,30 +1,27 @@
 //helpfunction to get allele probability:
 //#include <vector> //vector storage
-
-getKit <- function(kit=NULL, what=NA, fileName = "kit.txt", folderName=NULL) {  
-  .separator <- .Platform$file.sep # Platform dependent path separator. 
   
   if(is.null(folderName)) {
-    packagePath <- path.package("euroformix", quiet = FALSE) # Get package path.
-    folderName <- paste(packagePath,"extdata",sep=.separator) #get folder containing the filename
+    packagePath <- path.package("euroformix", quiet = FALSE)
+    folderName <- paste(packagePath,"extdata",sep=.separator)
   }
-  filePath <- paste(folderName, fileName, sep=.separator) #get full pathname of kit file
+  filePath <- paste(folderName, fileName, sep=.separator) 
   .kitInfo <- read.delim(file=filePath, header = TRUE, sep = "\t", quote = "\"",dec = ".", fill = TRUE, stringsAsFactors=FALSE)
  
   # Available kits. Must match else if construct.
   kits<-unique(.kitInfo$Short.Name)
-	if (is.null(kit)) {	# Check if NULL
+	if (is.null(kit)) {
 		res<-kits
-	} else {	# String provided.
-		# Check if number or string.
+	} else {
+		
 		if (is.numeric(kit)) {
-			index<-kit # Set index to number.
+			index<-kit 
 		} else {
-			index<-match(toupper(kit),toupper(kits)) # Find matching kit index (case insensitive)
+			index<-match(toupper(kit),toupper(kits)) 
 		}
-		if (any(is.na(index))) { 		# No matching kit.
+		if (any(is.na(index))) { 
 			return(NA)
-		# Assign matching kit information.
+		
 		} else {
 		  currentKit <- .kitInfo[.kitInfo$Short.Name==kits[index], ]
               res <- data.frame(Panel = currentKit$Panel,
@@ -48,9 +45,9 @@ getKit <- function(kit=NULL, what=NA, fileName = "kit.txt", folderName=NULL) {
 	}
  if (!is.null(kit)) {
 
-    if(is.na(what)){  # Return all kit information.
+    if(is.na(what)){  
       return(res)
- } else if (toupper(what) == "GENDER"){  # Return gender marker as string. 
+ } else if (toupper(what) == "GENDER"){  
       genderMarker <- as.character(unique(res$Marker[res$Gender.Marker == TRUE]))
       if(length(genderMarker) > 1){
         warning(paste("More than one gender marker returned for kit", kit))
