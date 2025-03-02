@@ -5,10 +5,8 @@
     packagePath <- path.package("euroformix", quiet = FALSE)
     folderName <- paste(packagePath,"extdata",sep=.separator)
   }
-  filePath <- paste(folderName, fileName, sep=.separator) 
   .kitInfo <- read.delim(file=filePath, header = TRUE, sep = "\t", quote = "\"",dec = ".", fill = TRUE, stringsAsFactors=FALSE)
  
-  # Available kits. Must match else if construct.
   kits<-unique(.kitInfo$Short.Name)
 	if (is.null(kit)) {
 		res<-kits
@@ -40,7 +38,7 @@
                         Offset = currentKit$Offset,
                         Gender.Marker = currentKit$Gender.Marker,
                         stringsAsFactors = FALSE)
-		  res$Marker <- factor(res$Marker, levels=unique(res$Marker))# Create useful factors. 
+		  res$Marker <- factor(res$Marker, levels=unique(res$Marker))
 		} 
 	}
  if (!is.null(kit)) {
