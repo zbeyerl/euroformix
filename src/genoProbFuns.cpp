@@ -1,9 +1,7 @@
 //helpfunction to get allele probability:
 //#include <vector> //vector storage
   
-
-
-double prob_a(double Pa, double mm, double nn, double fst, double genderMarker) {
+double prob_a(double Pa, double mm, double nn, double fst) {
 	return( (mm*(fst) + (1-(fst))*Pa)/(1+(nn-1)*(fst)) ); 
 }
 
@@ -13,23 +11,21 @@ double prob_relUnknown(int aindU, int bindU, int Ugind, double *Fvec, double fst
 	//ibd = ibd vector (NOC long)
 	
 	double genoSum; //used to sum the genotype probability tfor unknowns		
-	//int aindU = outG1vec[Ugind  ]; //get allele index of genotype g_1 (unknown)
-	//int bindU = outG1vec[Ugind+1]; //get allele index of genotype g_2 (unknown)
-	//int aindR = outG1vec[Rgind  ]; //get allele index of genotype g_1 (related)
-	//int bindR = outG1vec[Rgind+1]; //get allele index of genotype g_2 (related)
+	//int aindU = outG1vec[2*Ugind  ]; //get allele index of genotype g_1 (unknown)
+	//int bindU = outG1vec[2*Ugind+1]; //get allele index of genotype g_2 (unknown)
+	//int aindR = outG1vec[2*Rgind  ]; //get allele index of genotype g_1 (related)
+	//int bindR = outG1vec[2*Rgind+1]; //get allele index of genotype g_2 (related)
 	
 	bool Uhom = aindU==bindU; //boolean of whether unknown genotype is homozygote
 	
-if(genderMarker) { 
-		Uhom; }
 	//First step: Calculate random match probability of unrelated situation:
 	genoSum = prob_a(Fvec[aindU],maTypedvec[aindU],nTyped,fst); //init with prob 1st allele  
 	if(Uhom) { //if unknown is homozygote					
 		genoSum *= prob_a(Fvec[aindU],maTypedvec[aindU]+1,nTyped+1,fst); //calculate random match prob (always used) 					
 	} else { //if unknown is heterozygote variant
-          genoSum *= 2*prob_a(Fvec[bindU],maTypedvec[bindU],nTyped+1,fst); //calculate prob 2st allele  (and scale with 2)	}
-}
-	
+		genoSum *= 2*prob_a(Fvec[bindU],maTypedvec[bindU],nTyped+1,fst); //calculate prob 2st allele  (and scale with 2)
+	}
+		
 	//Extension with kappa-coefficient: SEE FORMULAS IN TABLE A.3 in Book "A forensic practicioners guide...."
 	if( Rgind != -1 ) { //if related is specified (not -1 index)
 		genoSum *= ibd[0]; //multiply with kappa0
@@ -39,7 +35,7 @@ if(genderMarker) {
 			if(Uhom) { //if unknown is homozygote
 				genoSum += prob_a(Fvec[aindU],maTypedvec[aindU],nTyped,fst)*ibd[1] ; //multiply with kappa1 
 			} else { //if unknown is heterozygote variant
-				genoSum += (prob_a(Fvec[aindU],maTypedvec[aindU],nTyped,fst)+prob_a(Fvec[bindU],maTypedvec[bindU],nTyped,fst))*ibd[1]/2 ; //multiply with kappa1						
+				genoSum += (prob_a(Fvec[aindU],maTypedvec[aindU],nTyped,fst)+prob_a(Fvec[bindU],maTypedvec[bindU],nTyped,fst))*ibd[1]/2 ; //multiply with kappa1 						
 			}	
 			
 		} else { //if not the same genotype we need to check overlap (a,b)~(c,d)
