@@ -1,7 +1,62 @@
 //helpfunction to get allele probability:
 //#include <vector> //vector storage
 
-#include "getKit.R"
+getKit <- function(kit=NULL, what=NA, fileName = "kit.txt", folderName=NULL) {  
+  .separator <- .Platform$file.sep # Platform dependent path separator. 
+  
+  if(is.null(folderName)) {
+    packagePath <- path.package("euroformix", quiet = FALSE) # Get package path.
+    folderName <- paste(packagePath,"extdata",sep=.separator) #get folder containing the filename
+  }
+  filePath <- paste(folderName, fileName, sep=.separator) #get full pathname of kit file
+  .kitInfo <- read.delim(file=filePath, header = TRUE, sep = "\t", quote = "\"",dec = ".", fill = TRUE, stringsAsFactors=FALSE)
+ 
+  # Available kits. Must match else if construct.
+  kits<-unique(.kitInfo$Short.Name)
+	if (is.null(kit)) {	# Check if NULL
+		res<-kits
+	} else {	# String provided.
+		# Check if number or string.
+		if (is.numeric(kit)) {
+			index<-kit # Set index to number.
+		} else {
+			index<-match(toupper(kit),toupper(kits)) # Find matching kit index (case insensitive)
+		}
+		if (any(is.na(index))) { 		# No matching kit.
+			return(NA)
+		# Assign matching kit information.
+		} else {
+		  currentKit <- .kitInfo[.kitInfo$Short.Name==kits[index], ]
+              res <- data.frame(Panel = currentKit$Panel,
+                        Short.Name = currentKit$Short.Name,
+                        Full.Name = currentKit$Full.Name,
+                        Marker = currentKit$Marker,
+                        Allele = currentKit$Allele,
+                        Size = currentKit$Size,
+                        Size.Min = currentKit$Size.Min,
+                        Size.Max = currentKit$Size.Max,
+                        Virtual = currentKit$Virtual,
+                        Color = currentKit$Color,
+                        Repeat = currentKit$Repeat,
+                        Marker.Min = currentKit$Marker.Min,
+                        Marker.Max = currentKit$Marker.Max,
+                        Offset = currentKit$Offset,
+                        Gender.Marker = currentKit$Gender.Marker,
+                        stringsAsFactors = FALSE)
+		  res$Marker <- factor(res$Marker, levels=unique(res$Marker))# Create useful factors. 
+		} 
+	}
+ if (!is.null(kit)) {
+
+    if(is.na(what)){  # Return all kit information.
+      return(res)
+ } else if (toupper(what) == "GENDER"){  # Return gender marker as string. 
+      genderMarker <- as.character(unique(res$Marker[res$Gender.Marker == TRUE]))
+      if(length(genderMarker) > 1){
+        warning(paste("More than one gender marker returned for kit", kit))
+      }
+      return(genderMarker);
+
 
 double prob_a(double Pa, double mm, double nn, double fst) {
 	return( (mm*(fst) + (1-(fst))*Pa)/(1+(nn-1)*(fst)) ); 
@@ -19,7 +74,8 @@ double prob_relUnknown(int aindU, int bindU, int Ugind, double *Fvec, double fst
 	//int bindR = outG1vec[Rgind+1]; //get allele index of genotype g_2 (related)
 	
 	bool Uhom = aindU==bindU; //boolean of whether unknown genotype is homozygote
-	if(genderMarker) { 
+	
+if(genderMarker) { 
 		Uhom; }
 	//First step: Calculate random match probability of unrelated situation:
 	genoSum = prob_a(Fvec[aindU],maTypedvec[aindU],nTyped,fst); //init with prob 1st allele  
