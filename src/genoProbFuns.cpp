@@ -1,15 +1,15 @@
 //helpfunction to get allele probability:
 //#include <vector> //vector storage
   
-    packagePath <- path.package("euroformix", quiet = FALSE)
-    folderName <- paste(packagePath,"extdata",sep=.separator)
+    path.package("euroformix", quiet = FALSE)
+    paste(packagePath,"extdata",sep=.separator)
   }
-  kitInfo <- read.delim(file=filePath, header = TRUE, sep = "\t", quote = "\"",dec = ".", fill = TRUE, stringsAsFactors=FALSE)
+  read.delim(file=filePath, header = TRUE, sep = "\t", quote = "\"",dec = ".", fill = TRUE, stringsAsFactors=FALSE)
  
   kits<-unique(.kitInfo$Short.Name)
 	if (is.null(kit)) {
 		res<-kits
-    } else
+     else
 		
 		if (is.numeric(kit)) {
 			index<-kit 
