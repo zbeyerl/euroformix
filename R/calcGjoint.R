@@ -19,7 +19,6 @@
 #' refR=c("2","3"),ibd=c(1/4,1/2,1/4))
 
 calcGjoint = function(freq,nU=1,fst=0,refK=NULL,refR=NULL,ibd=c(1,0,0)) {
-  if(length(fst)!=1) stop("Wrong input length for fst")
   if(length(nU)!=1) stop("Wrong input length for number of unknowns (nU)")
   if(nU==0) stop("You must specify at least one unknown to use this function!")
   if(!is.numeric(freq))  stop("freq argument must be numeric!") 
