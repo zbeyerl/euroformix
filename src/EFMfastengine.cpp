@@ -127,7 +127,7 @@ class EFMmarker { //Each marker is treated separately
 		//Rcpp::Rcout << m_dropinweight << "\n";
 
 		//Create contribution matrix (1 genotype):
-		m_NumGenos1p = int(NumAlleles*(NumAlleles + 1) / 2); //get number of Genotype outcome		
+		m_NumGenos1p = int(NumAlleles); //get number of Genotype outcome		
 		m_outG1allele.set_size(m_NumGenos1p,2); //init nG1x2 matrix (allele names as indices 0,...,nA-1)
 		int cc = 0; //counter oveer all genotypes
 		for (int i = 0; i < NumAlleles; i++) {
