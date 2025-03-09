@@ -29,7 +29,7 @@ calcGjoint = function(freq,nU=1,fst=0,refK=NULL,refR=NULL,ibd=c(1,0,0)) {
   
   #Function calculates genotypes for all possib
   nn = length(freq) #number of alleles
-  nG <- nn*(1+nn)/2 #number of allele outcome
+  nG <- 2 #number of allele outcome
   #nG^nU #NUMBER OF ITERATIONS
   #print(nG^nU)
   
