@@ -18,8 +18,8 @@
 #' foo2 = calcGjoint(freq,nU=2,fst=0.1,refK=c("2","3","1","1"),
 #' refR=c("2","3"),ibd=c(1/4,1/2,1/4))
 
-
 calcGjoint = function(freq,nU=1,fst=0,refK=NULL,refR=NULL,ibd=c(1,0,0)) {
+  if(length(fst)!=1) stop("Wrong input length for fst")
   if(length(nU)!=1) stop("Wrong input length for number of unknowns (nU)")
   if(nU==0) stop("You must specify at least one unknown to use this function!")
   if(!is.numeric(freq))  stop("freq argument must be numeric!") 
@@ -28,12 +28,11 @@ calcGjoint = function(freq,nU=1,fst=0,refK=NULL,refR=NULL,ibd=c(1,0,0)) {
   if(is.character(sumsToOne)) warning("freq argument must sum to one!")
   
   #Function calculates genotypes for all possib
-  
   nn = length(freq) #number of alleles
   nG <- nn*(1+nn)/2 #number of allele outcome
   #nG^nU #NUMBER OF ITERATIONS
   #print(nG^nU)
-  }
+  
   #PRESTEP: GET GENOTYPE OUTCOME: SIMILAR TO getGlist function
   av <- names(freq)   
   suppressWarnings({   
@@ -159,5 +158,4 @@ calcGjoint = function(freq,nU=1,fst=0,refK=NULL,refR=NULL,ibd=c(1,0,0)) {
   
   return(list(G=G,Gprob=Gprob)) #return list
 }
-
 
