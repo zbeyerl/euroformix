@@ -128,7 +128,7 @@ class EFMmarker { //Each marker is treated separately
 
 		//Create contribution matrix (1 genotype):
 		m_NumGenos1p = int(NumAlleles); //get number of Genotype outcome		
-		m_outG1allele.set_size(m_NumGenos1p,2); //init nG1x2 matrix (allele names as indices 0,...,nA-1)
+		m_outG1allele.set_size(m_NumGenos1p,1); //init nG1x2 matrix (allele names as indices 0,...,nA-1)
 		int cc = 0; //counter oveer all genotypes
 		for (int i = 0; i < NumAlleles; i++) {
 			for (int j = i; j < NumAlleles; j++) { 
